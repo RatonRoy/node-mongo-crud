@@ -33,11 +33,37 @@ how to connect server with mongodb the steps are given blow
 
 /* *****************
 -------------------------------
-The Steps of the mongodb.
+The Steps of the mongodb curd operations 
 -------------------------
 1. search node mongodb crud operation then go to the mongodb fundamentals link. or go to this link https://www.mongodb.com/docs/drivers/node/current/usage-examples/insertOne/
 2. click the insert operation and select the insert a document. 
 
-
+3. replace this code [
+	client.connect(err => {
+	const collection = client.db("first-mongodb").collection("users");
+	console.log('db connected ');
+  // perform actions on the collection object
+  client.close();
+});
+]
+by this code [
+	sync function run() {
+  try {
+    await client.connect();
+    const database = client.db("insertDB");
+    const haiku = database.collection("haiku");
+    // create a document to insert
+    const doc = {
+      title: "Record of a Shriveled Datum",
+      content: "No bytes, no problem. Just insert a document, in MongoDB",
+    }
+    const result = await haiku.insertOne(doc);
+    console.log(`A document was inserted with the _id: ${result.insertedId}`);
+  } finally {
+    await client.close();
+  }
+}
+run().catch(console.dir);
+]
 
 ************** */
